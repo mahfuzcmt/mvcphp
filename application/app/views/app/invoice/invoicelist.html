@@ -1,0 +1,94 @@
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>
+		Invoice List of <small></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Invoice List</li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="col-md-12">
+			<div data-ng-if="response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+			
+		</div>
+	<div class="row"  data-ng-hide="priceList.length == 0">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="row margin-left-0">
+						<div class="col-md-3 pull-right">
+							<input data-ng-change="search(searchText);" type="text" name="table_search" class="search-panel form-control input-sm clientSearch" placeholder= "Search by service name" data-ng-model="searchText"/>
+						</div>
+					</div>
+					<div class="show-hide-animation" >
+						<div class="col-md-6 pull-left">
+							<h5 data-ng-show="invoicelist.length > 0">{{ pageItemText }}</h5>
+							<h5 data-ng-show="invoicelist.length == 0">No Invoice is found</h5>
+						</div>
+						<div class="col-md-6 pull-right  text-right top-paginationBox">
+							<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+							data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+						</div>
+					</div>
+				</div>
+
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                    	<thead>
+	                        <tr>
+	                            <th class="text-right">#</th>
+	                            <th class="text-right">Invoice ID</th>	
+	                            <th class="text-left">Service Name</th>                           
+	                            <th class="text-left">Price</th>
+	                            <th class="text-left">Status</th>
+	                            <th class="text-left">Last Updated By</th>
+	                            <th class="text-left">Last Updated Date</th>
+	                         </tr>                    	
+                    	</thead>
+                        <tbody>
+	                        <tr data-ng-repeat="invoice in invoicelist ">
+								<td class="text-right">{{$index+1}}</td>
+								<td class="text-right">{{invoice.invoiceID}}</td>
+								<td class="text-left">{{invoice.serviceName}}</td>
+								<td class="text-left">{{invoice.price | currency:"BDT " }}</td>
+								<td ng-class="invoice.currentStatus == 'paid' ? 'text-left text-success' : 'text-left text-danger'">{{invoice.currentStatus}}</td>
+								<td class="text-left">{{invoice.updatedBy}}</td>
+								<td class="text-left">{{invoice.updatedOn}}</td>
+							</tr>
+	                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+		<div class="show-hide-animation" >
+			<div class="col-md-6 pull-left">
+				<h5 data-ng-show="invoicelist.length > 0">{{ pageItemText }}</h5>
+				<h5 data-ng-show="invoicelist.length == 0">No Invoice is found</h5>
+			</div>
+			<div class="col-md-6 pull-right  text-right top-paginationBox">
+				<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+				data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+			</div>
+		</div>
+    </div>
+</section>
+
+
+

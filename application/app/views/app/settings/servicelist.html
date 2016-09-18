@@ -1,0 +1,111 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>
+		Service List <small></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Service List</li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="col-md-12">
+			<div data-ng-if="response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+	</div>
+	<div class="row"  data-ng-hide="priceList.length == 0">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="row margin-left-0">
+						<div class="col-md-3 pull-left">
+							<button type="submit" class="btn btn-primary" data-ng-click="redirect('service')" style="margin-top: 5px; margin-left: 5px;">New Service</button>
+						</div>
+						<div class="col-md-4">
+						Currency view
+							<button type="submit" class="btn btn-primary" data-ng-click=" currency = 'BDT' " style="margin-top: 5px; margin-left: 3px;">BDT</button>
+						
+						
+							<button type="submit" class="btn btn-primary" data-ng-click=" currency = 'USD' " style="margin-top: 5px; margin-left: 3px;">USD</button>
+						
+						
+							<button type="submit" class="btn btn-primary" data-ng-click=" currency = 'Riyal' " style="margin-top: 5px; margin-left: 3px;">Riyal</button>
+						</div>
+						<div class="col-md-3 pull-right">
+							<input data-ng-change="search(searchText);" type="text" name="table_search" class="search-panel form-control input-sm clientSearch" placeholder= "Search by service name" data-ng-model="searchText"/>
+						</div>
+					</div>
+					<div class="show-hide-animation" >
+						<div class="col-md-6 pull-left">
+							<h5 data-ng-show="serviceList.length > 0">{{ pageItemText }}</h5>
+							<h5 data-ng-show="serviceList.length == 0">No Service is found</h5>
+						</div>
+						<div class="col-md-6 pull-right  text-right top-paginationBox">
+							<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+							data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+						</div>
+					</div>
+				</div>
+
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                    	<thead>
+	                        <tr>
+	                            <th class="text-right">#</th>
+	                            <th class="text-right">Service ID</th>	
+	                            <th class="text-left">Service Name</th>                           
+	                            <th data-ng-show="currency === 'BDT' " class="text-left">Price in BDT </th>
+	                            <th data-ng-show="currency === 'USD' " class="text-left">Price in USD</th>
+	                            <th data-ng-show="currency === 'Riyal' " class="text-left">Price in Riyal</th>
+	                            <th class="text-left">Created By</th>
+	                            <th class="text-left">Since </th>
+								<th class="text-left">Action</th>
+                    	</thead>
+                        <tbody>
+	                        <tr data-ng-repeat="service in serviceList ">
+								<td class="text-right">{{$index+1}}</td>
+								<td class="text-right">{{service.oid}}</td>
+								<td class="text-left">{{service.serviceName}}</td>
+								<td data-ng-show="currency === 'BDT' " class="text-left">{{service.price | currency:"BDT " }}</td>
+								<td data-ng-show="currency === 'USD' " class="text-left">{{service.usdprice | currency:"USD " }}</td>
+								<td data-ng-show="currency === 'Riyal' " class="text-left">{{service.riyalprice | currency:"Riyal " }}</td>
+								<td class="text-left">{{service.createdBy}}</td>
+								<td class="text-left">{{service.createdOn}}</td>
+								<td class="text-left">
+									<button type="submit" class="btn btn-primary" data-ng-click="delete(service);">Delete</button>
+									<button type="submit" class="btn btn-primary" data-ng-click="edit(service);" >Edit</button>
+								</td>
+							</tr>
+	                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+		<div class="show-hide-animation" >
+			<div class="col-md-6 pull-left">
+				<h5 data-ng-show="serviceList.length > 0">{{ pageItemText }}</h5>
+				<h5 data-ng-show="serviceList.length == 0">No Service is found</h5>
+			</div>
+			<div class="col-md-6 pull-right  text-right top-paginationBox">
+				<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+				data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+			</div>
+		</div>
+    </div>
+</section>
+
+
+

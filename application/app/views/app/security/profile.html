@@ -1,0 +1,152 @@
+<section class="content-header">
+	<h1>
+		Profile <small></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Profile</li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div data-ng-if="response.status == 'error' || response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                </div>
+                
+                <div class="box-body">
+					<form role="form" name="changepasswordform">
+							<div class="panel-group" id="accordion">
+								<div ng-show="!isEditableState" class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<span>Profile of {{user.fullName}}</span>
+										</h4>
+									 </div>
+									 <div id="basic"  class="panel-collapse collapse" ng-class="{'in': true}">
+										<div class="panel-body">
+											<div class="col-md-6">
+												<section id="basic">
+													<div class="form-group">
+														<label>User ID : <span>{{user.userID}}</span></label>
+													</div>
+													<div class="form-group">
+														<label>Name : <span>{{user.fullName}}</span></label>
+													</div>
+													
+													<div class="form-group">
+														<label>Email : <span>{{user.email}}</span></label>
+													</div>
+													<div class="form-group">
+														<label>Contact No : <span>{{user.mobile}}</span></label>
+													</div>
+													<div class="form-group">
+														<label>Company : <span>{{user.company}}</span></label>
+													</div>
+													<div class="form-group">
+														<label>Balance : <span>{{user.balance | currency:'BDT '}}</span></label>
+													</div>
+												</section>
+											</div>
+											<div class="col-md-6">
+												<section id="userimage">
+													<div class="form-group">
+														<div class="fileinput-preview thumbnail" style="width: 150px; height: 185px;">
+															<img id="profilePic" data-ng-src="{{user.imagePath}}" width="150px" height="180px" />
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="form-group col-md-2">
+												<button type="submit" class="btn btn-primary btn-block" ng-click="isEditableState =  true">Change Info</button> 
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-show="isEditableState" class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<span>Profile Updation of {{user.fullName}}</span>
+										</h4>
+									 </div>
+									 <div id="basic"  class="panel-collapse collapse" ng-class="{'in': true}">
+										<div class="panel-body">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Username<span class="mandatory">*</span></label>
+													<input type="text" disabled data-ng-model="user.userID" name="userID" class="form-control" placeholder="User Name" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+												</div>
+												<div class="form-group">
+													<label>Full Name<span class="mandatory">*</span></label>
+													<input type="text" data-ng-model="user.fullName" name="userID" class="form-control" placeholder="Full Name" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+												</div>
+												<div class="form-group">
+													<label>Comapany</label>
+													<input type="text" data-ng-model="user.company" name="userID" class="form-control" placeholder="Company Name"/>
+												</div>
+												<div class="form-group">
+													<label>Mobile<span class="mandatory">*</span></label>
+													<input type="text" data-ng-model="user.mobile" name="userID" class="form-control" placeholder="Mobile" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)"/>
+												</div>
+												<div class="form-group">
+													<label>Email<span class="mandatory">*</span></label>
+													<input type="text" data-ng-model="user.email" name="userID" class="form-control" placeholder="Emial Address" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Password<span class="mandatory">*</span></label>
+													<input type="password" data-ng-model="user.password" name="password" class="form-control" placeholder="Password"  onClick="this.setSelectionRange(0, this.value.length)" required />
+												</div> 
+												<div class="form-group">
+													<div class="fileinput-preview thumbnail" style="width: 150px; height: 150px;">
+														<img id="profilePic" data-ng-src="{{user.imagePath}}" width="148px" height="148px" />
+													</div>
+													<span class="btn btn-default btn-file">
+														<span class="fileinput-new">Profile Picture</span>
+														<input type="file" ng-file-select name="upload" accept="image/*" ng-file-change="uploadPic($files)" ngf-max-size="2M" />
+													</span>
+												</div>
+											</div>
+											<div class="form-group col-md-2">
+												<button type="submit" class="btn btn-danger btn-block col-md-2" ng-click="isEditableState =  false">Back</button> 
+											</div>
+											<div class="form-group col-md-2">
+												<button type="submit" class="btn btn-primary btn-block col-md-" ng-click="updateUserInfo(user);">Update Info</button> 
+											</div>
+										</div>
+									</div>
+								</div>
+									
+								</div>
+							</div>
+							
+
+                	</form>
+				</div>
+                	
+                	
+                	
+            </div>
+        </div>
+    </div>
+</section>

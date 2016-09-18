@@ -1,0 +1,104 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>
+		Order List <small></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Order List</li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="col-md-12">
+			<div data-ng-if="response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+	</div>
+	<div class="row"  data-ng-hide="priceList.length == 0">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="row margin-left-0">
+						<div class="col-md-3 pull-left">
+							<button type="submit" class="btn btn-primary" data-ng-click="redirect('order')" style="margin-top: 5px; margin-left: 5px;">New Order</button>
+						</div>
+						<div class="col-md-3 pull-right">
+							<input data-ng-change="search(searchText);" type="text" name="table_search" class="search-panel form-control input-sm clientSearch" placeholder= "Search by service name" data-ng-model="searchText"/>
+						</div>
+					</div>
+					<div class="show-hide-animation" >
+						<div class="col-md-6 pull-left">
+							<h5 data-ng-show="orderList.length > 0">{{ pageItemText }}</h5>
+							<h5 data-ng-show="orderList.length == 0">No Order is found</h5>
+						</div>
+						<div class="col-md-6 pull-right  text-right top-paginationBox">
+							<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+							data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+						</div>
+					</div>
+				</div>
+
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                    	<thead>
+	                        <tr>
+	                            <th class="text-right">#</th>
+	                            <th class="text-right">Order ID</th>	
+	                            <th class="text-left">Service Name</th>                           
+	                            <th class="text-left">Price</th>
+	                            <th class="text-left">Status</th>
+	                            <th class="text-left">Requested By</th>
+	                            <th class="text-left">Requested Date</th>
+								<th data-ng-show="userInfo.role != 'user' " class="text-left">File Path</th>
+								<th data-ng-show="userInfo.role != 'user' " class="text-left">Action</th>
+	                         </tr>                    	
+                    	</thead>
+                        <tbody>
+	                        <tr data-ng-repeat="order in orderList ">
+								<td class="text-right">{{$index+1}}</td>
+								<td class="text-right">{{order.orderID}}</td>
+								<td class="text-left">{{order.serviceName}}</td>
+								<td class="text-left">{{order.price | currency:"BDT " }}</td>
+								<td ng-hide="order.status == 'pending' " ng-class="order.status == 'active' ? 'text-left text-success' : 'text-left text-danger'">{{order.status}}</td>
+								<td ng-show="order.status == 'pending' " class="text-left">{{order.status}}</td>
+								<td class="text-left">{{order.updatedBy}}</td>
+								<td class="text-left">{{order.updatedOn}}</td>
+								<td data-ng-show="userInfo.role != 'user' " class="text-left"><a href='{{order.filePath}}'>{{order.filePath}}</a></td>
+								<td data-ng-show="userInfo.role != 'user' " class="text-left">
+									<button type="submit" ng-disabled="order.status == 'active' " class="btn btn-primary" data-ng-click="changeStatus('active',order.orderID)" style="margin-top: 5px; margin-left: 5px;">Active</button>
+									<button type="submit" ng-disabled="order.status == 'pending' " class="btn btn-primary" data-ng-click="changeStatus('pending',order.orderID)" style="margin-top: 5px; margin-left: 5px;">Pending</button>
+									<button type="submit" ng-disabled="order.status == 'cancel' " class="btn btn-primary" data-ng-click="changeStatus('cancel',order.orderID)" style="margin-top: 5px; margin-left: 5px;">Cancel</button>
+								</td>
+							</tr>
+	                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+		<div class="show-hide-animation" >
+			<div class="col-md-6 pull-left">
+				<h5 data-ng-show="orderList.length > 0">{{ pageItemText }}</h5>
+				<h5 data-ng-show="orderList.length == 0">No Order is found</h5>
+			</div>
+			<div class="col-md-6 pull-right  text-right top-paginationBox">
+				<pagination data-ng-model="currentPage" data-total-items="dataListSize" 
+				data-boundary-links="true" data-max-size="maxPaginationSize" data-items-per-page="itemsPerPage"></pagination>
+			</div>
+		</div>
+    </div>
+</section>
+
+
+

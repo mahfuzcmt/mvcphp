@@ -1,0 +1,201 @@
+<section ng-hide="customOrder" class="content-header">
+	<h1>
+	 Order 
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active"> Order</li>
+	</ol>
+</section>
+<section ng-show="customOrder" class="content-header">
+	<h1>
+	Custom Order 
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Custom Order</li>
+	</ol>
+</section>
+
+<section ng-hide="customOrder" class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div data-ng-if="response.status == 'error' || response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+		</div>
+	</div>				
+	<div class="row">
+		<div class="col-md-12">
+			<div data-ng-include="messagePageLocation"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"> Order</h3>
+						<h5 class="pull-right" style="margin-right:5px">
+							<button type="submit" class="btn btn-primary" data-ng-click="changeForm(true)">Want a custom Order?</button>
+						</h5>
+                </div>
+                <form role="form" name="changepasswordform">
+                    <div class="box-body">
+                        <div class="form-group">
+							<label>Main Category<span class="mandatory">*</span></label>
+							<select data-ng-model="service.oid" ui-select2 class="form-control" style="padding: 0px;" data-placeholder="Select a service" data-ng-click="getsubCat(service)">
+								<option></option>
+								<option data-ng-repeat ="srv in mainServiceList" value="{{srv.oid}}" >{{srv.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Service<span class="mandatory">*</span></label>
+							<select data-ng-model="order.serviceID" ui-select2 class="form-control" style="padding: 0px;" data-placeholder="Select a service" data-ng-click="getPrice(order)">
+								<option></option>
+								<option data-ng-repeat ="service in serviceList" value="{{service.oid}}" >{{service.serviceName}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Detail</label>
+							<textarea disabled class="form-control" type="text" rows="10" data-ng-model="service.description" />
+						</div>
+							
+						<div class="form-group">
+							<label>Price<span class="mandatory">*</span></label>
+							<input data-ng-show="currencyType === 'BDT' "type="text" disabled data-ng-model="service.price" />
+							<input data-ng-show="currencyType === 'USD' " type="text" disabled data-ng-model="service.usdprice" />
+							<input data-ng-show="currencyType === 'Riyal' " type="text" disabled data-ng-model="service.riyalprice" />
+							<select data-ng-model="currencyType" data-placeholder="Select a currency Type" >
+								<option value="USD" >USD</option>
+								<option  value="BDT" >BDT</option>
+								<option  value="Riyal" >Riyal</option>
+							</select>
+							
+						</div>
+						
+					
+							
+						<div class="form-group">
+							<button class="btn btn-danger" data-ng-click="resetForm()">Reset</button>
+							<button type="submit" class="btn btn-primary" data-ng-click="makeOrder(order)">Place Order</button>
+  						</div>
+                    </div>
+				</form>
+            </div>
+		</div>
+		<div class="col-md-6">
+			<div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Find our readymade products from marketplace</h3>
+				</div>
+                <div class="box-body">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary" data-ng-click="">Go to marketplace</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section ng-show="customOrder" class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div data-ng-if="response.status == 'error' || response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+		</div>
+	</div>				
+	<div class="row">
+		<div class="col-md-12">
+			<div data-ng-include="messagePageLocation"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Custom Order</h3>
+					<h5 class="pull-right" style="margin-right:5px">
+						<button type="submit" class="btn btn-primary" data-ng-click="changeForm(false)">Want to back fixed ?</button>
+					</h5>
+                </div>
+                <form role="form" name="changepasswordform">
+                    <div class="box-body">
+                         <div class="form-group">
+							<label>Main Category<span class="mandatory">*</span></label>
+							<select data-ng-model="service.oid" ui-select2 class="form-control" style="padding: 0px;" data-placeholder="Select a service" data-ng-click="getsubCat(service)">
+								<option></option>
+								<option data-ng-repeat ="service in mainServiceList" value="{{service.oid}}" >{{service.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Service<span class="mandatory">*</span></label>
+							<select data-ng-model="service.serviceID" ui-select2 class="form-control" style="padding: 0px;" data-placeholder="Select a service" data-ng-click="getPrice(service)">
+								<option></option>
+								<option data-ng-repeat ="service in serviceList" value="{{service.oid}}" >{{service.serviceName}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Detail<span class="mandatory">*</span></label>
+							<textarea  class="form-control" type="text" rows="10" data-ng-model="service.description" placeholder="please describe your requirements" required/>
+						</div>
+						<div class="form-group">
+							<label>Upload Your File (If have)</label>
+							<input type="file" ng-file-select name="upload" accept="/*" ng-file-change="uploadFile($files)" ngf-max-size="2M" />
+						</div>
+						<div class="form-group">
+							<label>Offer a Price in USD</label>
+							<input type="text"  class="form-control" data-ng-model="service.price" placeholder="USD amount only. exm: 1200"/>
+						</div>
+						<div class="form-group">
+							<label>Offer a Price in BDT</label>
+							<input type="text"  class="form-control" data-ng-model="service.usdPrice" placeholder="BDT amount only. exm: 50000"/>
+						</div>
+						<div class="form-group">
+							<label>Offer a Price in Riyal</label>
+							<input type="text"  class="form-control" data-ng-model="service.riyalPrice" placeholder="Riyal amount only. exm: 2000"/>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-danger" data-ng-click="resetForm()">Reset</button>
+							<button type="submit" class="btn btn-primary" data-ng-click="makeCustomOrder(service)">Place Custom Order</button>
+  						</div>
+                    </div>
+				</form>
+            </div>
+		</div>
+		<div class="col-md-6">
+			<div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Find our readymade products from marketplace</h3>
+				</div>
+                <div class="box-body">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary" data-ng-click="">Go to marketplace</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

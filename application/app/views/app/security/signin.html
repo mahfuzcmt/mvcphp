@@ -1,0 +1,137 @@
+<section class="" data-ng-hide="forgetPassPart">
+	<div class="row" data-ng-show="!signUpPart">
+        <div class="col-md-12">
+			<div class="form-box" id="login-box">
+	            <div class="header" style="background-color:#CC1E1E">Sign In</div>
+	            <form method="post">
+	                <div class="body bg-gray">       
+	                       <span ng-show="success" style="color:green">{{response}}</span>
+						   <span ng-show="!success" style="color:red">{{response}}</span>
+	                    <div class="form-group">
+	                        <input type="text" data-ng-model="login.userID" name="userID" class="form-control" placeholder="Login ID" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+	                    </div>
+	                    <div class="form-group">
+	                        <input type="password" data-ng-model="login.password" name="password" class="form-control" placeholder="Password"  onClick="this.setSelectionRange(0, this.value.length)" required />
+	                    </div>          
+	                    <div class="form-group">
+	                        <button type="submit" class="btn btn-primary btn-block" ng-click="signIn(login)">Sign me in</button> 
+	                    </div>
+						 <span class="link" ng-click="forgetPassPart = true">Forget password?</span><span class="link pull-right" ng-click="signUpPart = true" >Sign up</span> 
+	                </div>
+	            </form>
+	        </div>
+		</div>
+    </div>
+	<div class="row" data-ng-show="signUpPart">
+        <div class="col-md-12">
+			<div class="form-box" id="login-box" style="margin: 5px auto 0 auto;">
+	            <div class="header" style="background-color:#CC1E1E">Sign up</div>
+	            <form method="post" novalidate>
+	                <div class="body bg-gray"> 
+						<div  ng-show="part1">
+							<div class="form-group">
+								<label>Username<span class="mandatory">*</span></label>
+								<input type="text" data-ng-model="obj.userID" name="userID" class="form-control" placeholder="User Name" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+							</div>
+							<div class="form-group">
+								<label>Full Name<span class="mandatory">*</span></label>
+								<input type="text" data-ng-model="obj.fullName" name="userID" class="form-control" placeholder="Full Name" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+							</div>
+							<div class="form-group">
+								<label>Comapany</label>
+								<input type="text" data-ng-model="obj.company" name="userID" class="form-control" placeholder="Company Name"/>
+							</div>
+							<div class="form-group">
+								<label>Mobile<span class="mandatory">*</span></label>
+								<input type="text" data-ng-model="obj.mobile" name="userID" class="form-control" placeholder="Mobile" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+							</div>
+						</div>
+						<div ng-show="part2">
+							<div class="form-group">
+								<label>Email<span class="mandatory">*</span></label>
+								<input type="text" data-ng-model="obj.email" name="userID" class="form-control" placeholder="Emial Address" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+							</div>
+							<div class="form-group">
+								<label>Password<span class="mandatory">*</span></label>
+								<input type="password" data-ng-model="obj.password" name="password" class="form-control" placeholder="Password"  onClick="this.setSelectionRange(0, this.value.length)"  />
+							</div> 
+							<div class="form-group">
+								<label>Confirm Password<span class="mandatory">*</span></label>
+								<input type="password" data-ng-model="pass.confPassword" name="password" class="form-control" placeholder="Confirm Password"  onClick="this.setSelectionRange(0, this.value.length)" />
+								<span ng-show="(pass.confPassword != obj.password) || (notMached)" style="color:red">New password and Confirm password must be same!</span>
+							</div>
+							<div class="form-group">
+								<div class="fileinput-preview thumbnail" style="width: 150px; height: 150px;">
+									<img id="profilePic" data-ng-src="{{imagePath}}" width="148px" height="148px" />
+								</div>
+								<span class="btn btn-default btn-file">
+									<span class="fileinput-new">Profile Picture</span>
+									<input type="file" ng-file-select name="upload" accept="image/*" ng-file-change="uploadPic($files)" ngf-max-size="2M" />
+								</span>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block" ng-click="signUp(obj, pass.confPassword)">Sign up now</button> 
+							</div>
+						</div>
+						<div class="form-group">
+	                        <button type="submit" class="btn btn-warning btn-block" ng-click="formControl('pre');" ng-show="part2">{{preBtnText}}</button> 
+	                    </div>
+						<div class="form-group">
+	                        <button type="submit" class="btn btn-success btn-block" ng-click="formControl('next');" ng-show="part1">{{nextBtnText}} </button> 
+	                    </div>
+						
+						 <span class="link" ng-click="forgetPassPart = true">Forget password?</span> <span class="link pull-right" ng-click="signUpPart = false">back to Sign in</span>
+	                </div>
+	            </form>
+	         </div>
+		</div>
+    </div>
+</section>
+<section data-ng-show="forgetPassPart">
+	<div class="row">
+        <div class="col-md-12">
+			<div class="form-box" id="login-box" style="margin: 5px auto 0 auto; margin-top:100px;">
+	            <div class="header" style="background-color:#CC1E1E">Sign up</div>
+	            <form method="post" novalidate>
+	                <div class="body bg-gray"> 
+						<div  ng-show="part1">
+							<div class="form-group">
+								<label>Username<span class="mandatory">*</span></label>
+								<input type="text" data-ng-model="obj.userID" name="userID" class="form-control" placeholder="User Name" required autofocus="autofocus" onClick="this.setSelectionRange(0, this.value.length)" />
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary btn-block" ng-click="forgetPass(obj);">Send me </button>
+						<span class="link pull-right" ng-click="forgetPassPart = false">back to Sign in</span>
+	                </div>
+	            </form>
+	         </div>
+		</div>
+    </div>
+   	 
+</section>
+<div class="row">
+	<div class="col-md-4">
+</div>
+<div class="form-group col-md-4" style="margin-top:10px; margin-left: 41px;">
+		<button style="width: 350px;"type="submit" class="btn btn-primary btn-block" ><a class="footer-menu" href="http://www.lalcode.com/">Go to Home</a><a class="footer-menu" href="http://www.lalcode.com/pricing">Pricing</a><a class="footer-menu" href="http://www.lalcode.com/faq">FAQ</a></button> 
+	</div>
+<div class="col-md-4">
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-5">
+</div>
+<div class="col-md-3" style="margin-top: -10px;">
+Copyright &copy; 2016 Lalcode
+</div>
+
+<div class="col-md-5">
+</div>
+</div>
+<style>
+.footer-menu{
+    color: white;
+    padding-right: 50px;
+ }
+</style>

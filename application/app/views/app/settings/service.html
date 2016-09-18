@@ -1,0 +1,91 @@
+<section class="content-header">
+	<h1>
+		Service Provisioning
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Service Provisioning</li>
+	</ol>
+</section>
+
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div data-ng-if="response.status == 'error' || response.status == 'warning' " class="alert alert-block alert-danger">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-exclamation-circle"></i>
+				{{response.message}}
+			</div>
+			<div data-ng-if=" response.status == 'success' " class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="fa fa-times"></i>
+				</button>
+				<i class="fa fa-check"></i>
+				{{response.message}}
+			</div>
+		</div>
+	</div>				
+	<div class="row">
+		<div class="col-md-12">
+			<div data-ng-include="messagePageLocation"></div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Service Provisioning</h3>
+                </div>
+                <form role="form" name="changepasswordform">
+                    <div class="box-body">
+						<div class="form-group" ng-disabled="update">
+							<label>Service Category<span class="mandatory">*</span></label>
+							<select data-ng-model="service.serviceCategory" ui-select2 class="form-control" style="padding: 0px;" data-placeholder="Select a service" data-ng-click="checkCat(service)">
+								<option></option>
+								<option data-ng-repeat ="service in serviceList" value="{{service.oid}}" >{{service.name}}</option>
+							</select>
+						</div>
+						<div class="form-group" data-ng-show="newCategory && !update">
+							<label>Service Category<span class="mandatory">*</span></label>
+							<input type="text" class="form-control" placeholder="keep a service category name"  data-ng-model="service.serviceCategoryCustom" />
+						</div>
+                        <div class="form-group">
+							<label>Service<span class="mandatory">*</span></label>
+								<input type="text" class="form-control" placeholder="keep a service name"  data-ng-model="service.serviceName" />	
+						</div>
+						<div class="form-group">
+							<label>Description<span class="mandatory">*</span></label>
+								<textarea class="form-control" type="text" rows="10" data-ng-model="service.description" placeholder="describe here"/>
+						</div>
+						<div class="form-group">
+							<label>BD Price<span class="mandatory">*</span></label>
+							<input type="text" class="form-control"  placeholder="service charge only amount, exm: 25000" data-ng-model="service.price" />
+						</div>
+						<div class="form-group">
+							<label>USD Price</label>
+							<input type="text" class="form-control"  placeholder="service charge only amount, exm: 4000" data-ng-model="service.usdprice" />
+						</div>
+						<div class="form-group">
+							<label>Riyal  Price</label>
+							<input type="text" class="form-control"  placeholder="service charge only amount, exm: 5000" data-ng-model="service.riyalprice" />
+						</div>
+						<div class="form-group">
+							<button class="btn btn-danger" data-ng-click="resetChangePassword()">Reset</button>
+							<button type="submit" class="btn btn-primary" data-ng-click="addNewService(service)">{{btnName }}</button>
+  						</div>
+                    </div>
+				</form>
+            </div>
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+</section>
+
+
